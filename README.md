@@ -2,36 +2,35 @@
 
 A simple browser-based tool hosted on GitHub Pages that lets you read Wall Street Journal articles for free by routing them through [archive.is](https://archive.is).
 
+## Live URL
+
+**https://skurjekar.github.io/WSj/**
+
 ## How It Works
 
-This tool uses `archive.is/newest/<URL>` to fetch archived versions of WSJ pages. When you load the WSJ homepage or any article URL through this tool, it redirects the request through archive.is, bypassing the paywall.
+When you open the tool, it automatically loads `archive.is/newest/https://www.wsj.com` in an embedded frame. This shows you the **exact WSJ homepage layout** with all current headlines and article links. Since archive.is serves fully rendered cached snapshots, you see the complete page design.
 
-## Features
-
-- **URL Bar**: Paste any WSJ article URL and click "Read" to load it in-frame, or "New Tab ↗" to open it directly
-- **Home Button**: Quickly load the WSJ homepage through archive.is
-- **Inline Viewing**: Articles load within an iframe so you stay on the same page
-- **New Tab Mode**: Open articles directly in a new tab if the iframe doesn't work
-- **Responsive Design**: Works on desktop and mobile
+When you click any article link on the homepage, it navigates through archive.is, letting you read the full article content without hitting the paywall.
 
 ## Usage
 
-1. Visit the hosted page (GitHub Pages URL)
-2. Click "⌂ Home" or "Load WSJ Homepage" to browse the WSJ homepage
-3. Complete the one-time archive.is CAPTCHA (if prompted)
-4. Browse articles as normal — links within the archived page stay within archive.is
-5. To read a specific article, paste its URL in the bar and click "Read" or "New Tab ↗"
+1. Open the tool in your browser
+2. Complete the one-time archive.is CAPTCHA (first visit only)
+3. You'll see the full WSJ homepage with all articles and links
+4. Click any article to read it — links stay within archive.is
+5. To read a specific article: paste its URL in the bar and click **Read** or **↗ New Tab**
 
-## Deployment
+## Features
 
-This is a static single-page HTML file. Simply enable GitHub Pages on the repository (from the `main` branch) and access it at:
+- **Auto-loads WSJ homepage** on open via archive.is
+- **URL Bar**: Paste any WSJ article URL and hit Read
+- **New Tab mode**: Open articles in a separate tab if you prefer
+- **Home button**: Quickly return to the WSJ homepage
+- **Responsive**: Works on desktop and mobile
+- **No server needed**: Pure static HTML, hosted on GitHub Pages
 
-```
-https://<username>.github.io/WSj/
-```
+## Notes
 
-## Note
-
-- archive.is may show a one-time CAPTCHA on first access
-- Some pages may take a few seconds to load as archive.is fetches/serves the cached version
-- If the iframe doesn't load properly, use the "New Tab ↗" button to open directly
+- archive.is shows a one-time CAPTCHA on first visit — once completed, browsing is seamless
+- Links within the archived page naturally stay within archive.is, so you can browse freely
+- If archive.is blocks iframe embedding on some browsers, use the "↗ New Tab" button

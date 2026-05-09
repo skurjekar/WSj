@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WSJ Reader — Read Wall Street Journal Free</title>
+    <title>WSJ Reader</title>
     <style>
         * {
             margin: 0;
@@ -13,20 +13,19 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
+            background: #fff;
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* Top Toolbar */
         .toolbar {
             background: #0a0a0a;
-            padding: 10px 16px;
+            padding: 8px 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             z-index: 1000;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             flex-shrink: 0;
@@ -34,9 +33,8 @@
 
         .toolbar-brand {
             color: #ffffff;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            letter-spacing: -0.5px;
             white-space: nowrap;
             font-family: Georgia, serif;
         }
@@ -54,10 +52,10 @@
 
         .url-input {
             flex: 1;
-            padding: 8px 14px;
+            padding: 7px 12px;
             border: 1px solid #333;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 5px;
+            font-size: 13px;
             background: #1a1a1a;
             color: #e0e0e0;
             outline: none;
@@ -74,33 +72,23 @@
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 7px 14px;
             border: none;
-            border-radius: 6px;
-            font-size: 13px;
+            border-radius: 5px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             white-space: nowrap;
         }
 
-        .btn-read {
+        .btn-go {
             background: #4a90d9;
             color: white;
-            padding: 8px 20px;
         }
 
-        .btn-read:hover {
+        .btn-go:hover {
             background: #357abd;
-        }
-
-        .btn-newtab {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-newtab:hover {
-            background: #218838;
         }
 
         .btn-home {
@@ -114,7 +102,15 @@
             color: white;
         }
 
-        /* Main Content */
+        .btn-newtab {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-newtab:hover {
+            background: #218838;
+        }
+
         .content {
             flex: 1;
             position: relative;
@@ -125,9 +121,9 @@
             width: 100%;
             height: 100%;
             border: none;
+            background: white;
         }
 
-        /* Loading overlay */
         .loading-overlay {
             position: absolute;
             top: 0;
@@ -149,8 +145,8 @@
         }
 
         .loading-spinner {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border: 3px solid #e0e0e0;
             border-top-color: #0a0a0a;
             border-radius: 50%;
@@ -158,7 +154,7 @@
         }
 
         .loading-text {
-            margin-top: 16px;
+            margin-top: 14px;
             font-size: 14px;
             color: #666;
         }
@@ -167,120 +163,35 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Welcome / Landing page */
-        .welcome-page {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 40px 20px;
-            text-align: center;
-            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
-        }
-
-        .welcome-page.active {
+        .status-bar {
+            background: #1a1a1a;
+            border-top: 1px solid #333;
+            padding: 5px 16px;
+            font-size: 11px;
+            color: #888;
+            flex-shrink: 0;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .welcome-logo {
-            font-family: Georgia, serif;
-            font-size: 48px;
-            font-weight: 700;
-            color: #0a0a0a;
-            margin-bottom: 8px;
+        .status-bar .hint {
+            color: #aaa;
         }
 
-        .welcome-logo span {
+        .status-bar .hint strong {
             color: #4a90d9;
         }
 
-        .welcome-subtitle {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 40px;
-        }
-
-        .welcome-instructions {
-            max-width: 600px;
-            text-align: left;
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .welcome-instructions h3 {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 16px;
-        }
-
-        .welcome-instructions ol {
-            padding-left: 20px;
-            color: #555;
-            line-height: 2;
-            font-size: 14px;
-        }
-
-        .welcome-instructions li {
-            margin-bottom: 4px;
-        }
-
-        .welcome-instructions code {
-            background: #f0f0f0;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 12px;
-            color: #c7254e;
-        }
-
-        .quick-links {
-            margin-top: 24px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .quick-link {
-            padding: 10px 20px;
-            background: #0a0a0a;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-            border: none;
-        }
-
-        .quick-link:hover {
-            background: #333;
-        }
-
-        .quick-link.outline {
-            background: white;
-            color: #333;
-            border: 1px solid #ddd;
-        }
-
-        .quick-link.outline:hover {
-            background: #f5f5f5;
-            border-color: #999;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .toolbar {
                 flex-wrap: wrap;
-                padding: 8px 12px;
-                gap: 8px;
+                padding: 6px 10px;
+                gap: 6px;
             }
 
             .toolbar-brand {
-                font-size: 15px;
+                font-size: 14px;
             }
 
             .url-container {
@@ -290,20 +201,18 @@
             }
 
             .url-input {
-                font-size: 13px;
-                padding: 7px 10px;
+                font-size: 12px;
+                padding: 6px 10px;
             }
 
-            .welcome-logo {
-                font-size: 32px;
+            .btn {
+                padding: 6px 10px;
+                font-size: 11px;
             }
 
-            .welcome-subtitle {
-                font-size: 15px;
-            }
-
-            .welcome-instructions {
-                padding: 20px;
+            .status-bar {
+                flex-wrap: wrap;
+                gap: 4px;
             }
         }
     </style>
@@ -313,44 +222,27 @@
         <div class="toolbar-brand">WSJ <span>Reader</span></div>
         <div class="url-container">
             <input type="text" class="url-input" id="urlInput" 
-                   placeholder="Paste any WSJ article URL (e.g. https://www.wsj.com/articles/...)">
-            <button class="btn btn-read" id="btnRead" title="Load in frame">Read</button>
-            <button class="btn btn-newtab" id="btnNewTab" title="Open in new tab via archive.is">New Tab ↗</button>
-            <button class="btn btn-home" id="btnHome" title="Go to WSJ Homepage">⌂ Home</button>
+                   placeholder="Paste any WSJ article URL here..."
+                   value="https://www.wsj.com">
+            <button class="btn btn-go" id="btnGo">Read</button>
+            <button class="btn btn-newtab" id="btnNewTab">↗ New Tab</button>
+            <button class="btn btn-home" id="btnHome">⌂ Home</button>
         </div>
     </div>
 
-    <div class="content" id="contentArea">
-        <div class="loading-overlay hidden" id="loadingOverlay">
+    <div class="content">
+        <div class="loading-overlay" id="loadingOverlay">
             <div class="loading-spinner"></div>
-            <div class="loading-text">Loading via archive.is...</div>
+            <div class="loading-text">Loading WSJ via archive.is...</div>
         </div>
-
-        <div class="welcome-page active" id="welcomePage">
-            <div class="welcome-logo">WSJ <span>Reader</span></div>
-            <div class="welcome-subtitle">Read Wall Street Journal articles for free via archive.is</div>
-            
-            <div class="welcome-instructions">
-                <h3>How to use:</h3>
-                <ol>
-                    <li><strong>Browse the homepage:</strong> Click "⌂ Home" to load WSJ's homepage through archive.is</li>
-                    <li><strong>Read any article:</strong> Paste a WSJ URL in the bar above and click "Read" (loads in frame) or "New Tab ↗" (opens in a new tab)</li>
-                    <li><strong>Navigate articles:</strong> Once on the homepage, you can click article links. If they hit a paywall, copy the URL and paste it back into the bar above</li>
-                </ol>
-            </div>
-
-            <div class="quick-links">
-                <button class="quick-link" id="btnLoadHome">Load WSJ Homepage</button>
-                <button class="quick-link outline" id="btnOpenHomeDirect">Open Homepage in New Tab ↗</button>
-            </div>
-        </div>
-
         <iframe id="mainFrame" 
-                style="display:none;"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-popups-to-escape-sandbox"
-                referrerpolicy="no-referrer"
-                loading="lazy">
+                referrerpolicy="no-referrer">
         </iframe>
+    </div>
+
+    <div class="status-bar">
+        <span id="statusText">Loading...</span>
+        <span class="hint">💡 <strong>Tip:</strong> Right-click any headline → Copy Link → Paste above → Click Read</span>
     </div>
 
     <script>
@@ -358,144 +250,104 @@
         const ARCHIVE_PREFIX = 'https://archive.is/newest/';
         
         const urlInput = document.getElementById('urlInput');
-        const btnRead = document.getElementById('btnRead');
+        const btnGo = document.getElementById('btnGo');
         const btnNewTab = document.getElementById('btnNewTab');
         const btnHome = document.getElementById('btnHome');
         const mainFrame = document.getElementById('mainFrame');
         const loadingOverlay = document.getElementById('loadingOverlay');
-        const welcomePage = document.getElementById('welcomePage');
-        const btnLoadHome = document.getElementById('btnLoadHome');
-        const btnOpenHomeDirect = document.getElementById('btnOpenHomeDirect');
-
-        let currentArchiveUrl = '';
-        let currentOriginalUrl = '';
+        const statusText = document.getElementById('statusText');
 
         function getArchiveUrl(url) {
             url = url.trim();
-            
-            // If it's already an archive.is/archive.ph URL, use it directly
+            // Already an archive URL
             if (url.startsWith('https://archive.is/') || url.startsWith('https://archive.ph/') ||
                 url.startsWith('http://archive.is/') || url.startsWith('http://archive.ph/')) {
                 return url;
             }
-            
-            // If it doesn't start with http, add https://
+            // Add protocol if missing
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 url = 'https://' + url;
             }
-            
             return ARCHIVE_PREFIX + url;
         }
 
-        function loadInFrame(url) {
-            const archiveUrl = getArchiveUrl(url);
-            currentArchiveUrl = archiveUrl;
-            currentOriginalUrl = url;
+        function loadUrl(url) {
+            url = url.trim();
+            if (!url) return;
             
-            // Hide welcome, show frame
-            welcomePage.classList.remove('active');
-            mainFrame.style.display = 'block';
+            const archiveUrl = getArchiveUrl(url);
             
             // Show loading
             loadingOverlay.classList.remove('hidden');
+            statusText.textContent = 'Loading: ' + url;
+            
+            // Update URL input (show the original URL, not archive URL)
+            if (!url.startsWith('https://archive.')) {
+                urlInput.value = url;
+            }
             
             // Load in iframe
             mainFrame.src = archiveUrl;
-            
-            // Update URL input
-            urlInput.value = url;
-
-            // Timeout fallback
-            startLoadTimeout();
         }
 
-        function openInNewTab(url) {
-            const archiveUrl = getArchiveUrl(url);
-            window.open(archiveUrl, '_blank');
-        }
-
-        // Handle iframe load
+        // Detect iframe load
         mainFrame.addEventListener('load', function() {
             setTimeout(() => {
                 loadingOverlay.classList.add('hidden');
-            }, 800);
+                statusText.textContent = 'Loaded: ' + urlInput.value;
+            }, 500);
         });
 
-        // Handle iframe errors - show fallback after timeout
-        let loadTimeout;
-        function startLoadTimeout() {
-            clearTimeout(loadTimeout);
-            loadTimeout = setTimeout(() => {
+        // Also hide loading after timeout (in case load event doesn't fire properly)
+        function hideLoadingAfterTimeout() {
+            setTimeout(() => {
                 loadingOverlay.classList.add('hidden');
-            }, 12000);
+            }, 10000);
         }
 
-        // Read button (load in frame)
-        btnRead.addEventListener('click', function() {
+        // Read button
+        btnGo.addEventListener('click', function() {
             const url = urlInput.value.trim();
             if (url) {
-                loadInFrame(url);
+                loadUrl(url);
+                hideLoadingAfterTimeout();
             }
         });
 
-        // New Tab button
+        // New Tab button - opens in new tab directly
         btnNewTab.addEventListener('click', function() {
             const url = urlInput.value.trim();
             if (url) {
-                openInNewTab(url);
-            }
-        });
-
-        // Enter key in URL input
-        urlInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const url = urlInput.value.trim();
-                if (url) {
-                    loadInFrame(url);
-                }
+                window.open(getArchiveUrl(url), '_blank');
             }
         });
 
         // Home button
         btnHome.addEventListener('click', function() {
             urlInput.value = WSJ_HOME;
-            loadInFrame(WSJ_HOME);
+            loadUrl(WSJ_HOME);
+            hideLoadingAfterTimeout();
         });
 
-        // Welcome page buttons
-        btnLoadHome.addEventListener('click', function() {
-            urlInput.value = WSJ_HOME;
-            loadInFrame(WSJ_HOME);
+        // Enter key
+        urlInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const url = urlInput.value.trim();
+                if (url) {
+                    loadUrl(url);
+                    hideLoadingAfterTimeout();
+                }
+            }
         });
 
-        btnOpenHomeDirect.addEventListener('click', function() {
-            openInNewTab(WSJ_HOME);
-        });
-
-        // Select all text on focus
+        // Select all on focus
         urlInput.addEventListener('focus', function() {
             this.select();
         });
 
-        // Try to detect when iframe navigates to a non-archive URL
-        // We poll the iframe - if we can read the location, it means same-origin (shouldn't happen)
-        // If we can't, it's cross-origin (expected)
-        setInterval(() => {
-            try {
-                // This will throw if cross-origin (expected)
-                const iframeUrl = mainFrame.contentWindow.location.href;
-                // If we can read it and it's not about:blank, update the URL bar
-                if (iframeUrl && iframeUrl !== 'about:blank') {
-                    // Check if user navigated to a WSJ URL within the frame
-                    if (iframeUrl.includes('wsj.com') && !iframeUrl.includes('archive')) {
-                        urlInput.value = iframeUrl;
-                        currentOriginalUrl = iframeUrl;
-                    }
-                }
-            } catch(e) {
-                // Cross-origin - expected behavior, do nothing
-            }
-        }, 2000);
+        // Auto-load WSJ homepage on page open
+        loadUrl(WSJ_HOME);
+        hideLoadingAfterTimeout();
     </script>
 </body>
 </html>
